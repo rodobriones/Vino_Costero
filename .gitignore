@@ -1,0 +1,91 @@
+# ─────────────────────────────
+# Node & React general
+# ─────────────────────────────
+node_modules/
+dist/
+build/
+.cache/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ─────────────────────────────
+# Environment & configs
+# ─────────────────────────────
+.env
+.env.local
+.env.development.local
+.env.production.local
+.env.test.local
+*.env.*
+
+# ─────────────────────────────
+# IDE & editor settings
+# ─────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# ─────────────────────────────
+# OS generated files
+# ─────────────────────────────
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ─────────────────────────────
+# Logs
+# ─────────────────────────────
+logs/
+*.log
+log/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ─────────────────────────────
+# SQL backups / dumps
+# ─────────────────────────────
+*.sql
+*.bak
+*.dump
+
+# ─────────────────────────────
+# Coverage & test outputs
+# ─────────────────────────────
+coverage/
+*.lcov
+jest-cache/
+jest-test-results.json
+
+# ─────────────────────────────
+# Vite / React build
+# ─────────────────────────────
+web/.vite/
+web/node_modules/
+web/dist/
+
+# ─────────────────────────────
+# Express / Server build
+# ─────────────────────────────
+server/node_modules/
+server/*.log
+server/.env
+server/.env.local
+
+# ─────────────────────────────
+# Miscellaneous
+# ─────────────────────────────
+*.zip
+*.tar
+*.tgz
+*.7z
+tmp/
+temp/
