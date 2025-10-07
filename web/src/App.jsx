@@ -6,6 +6,8 @@ import Parcelas from './pages/Parcelas.jsx'
 import TiposUva from './pages/TiposUva.jsx'
 import Siembras from './pages/Siembras.jsx'
 import ReporteCosecha from './pages/ReporteCosecha.jsx'
+import Catas from './pages/Catas'
+import Enfermedades from './pages/Enfermedades'
 import { AuthProvider, useAuth } from './context/auth.jsx'
 
 function Protected({ children }) {
