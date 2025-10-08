@@ -53,9 +53,8 @@ lerna-debug.log*
 # ─────────────────────────────
 # SQL backups / dumps
 # ─────────────────────────────
-*.sql
-*.bak
-*.dump
+
+
 
 # ─────────────────────────────
 # Coverage & test outputs
