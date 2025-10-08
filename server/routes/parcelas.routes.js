@@ -20,14 +20,4 @@ router.post('/', requireAuth, requireRole('admin'), async (req, res) => {
   }
 });
 
-router.patch('/:id', requireAuth, requireRole('admin'), async (req, res) => {
-  const { id } = req.params;
-  const { nombre, hectareas, activo } = req.body;
-  await pool.query('UPDATE parcelas SET nombre=COALESCE(?, nombre), hectareas=COALESCE(?, hectareas), activo=COALESCE(?, activo) WHERE id=?',
-    [nombre, hectareas, typeof activo==='boolean'? (activo?1:0): NULL, id])
-    .catch(()=>{})
-  const [row] = await pool.query('SELECT * FROM parcelas WHERE id=?',[id]);
-  res.json(row[0] || null);
-});
-
 export default router;

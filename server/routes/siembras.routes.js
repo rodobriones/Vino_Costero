@@ -29,17 +29,4 @@ router.post('/', requireAuth, requireRole('admin'), async (req, res) => {
   }
 });
 
-router.post('/:id/enfermedad', requireAuth, requireRole('admin'), async (req, res) => {
-  const { id } = req.params;
-  const { tipo, severidad, fecha } = req.body;
-  if (!tipo || !severidad || !fecha) return res.status(400).json({ error: { code: 'VALIDATION_ERROR', message: 'tipo, severidad, fecha requeridos' } });
-  try {
-    const [r] = await pool.query('INSERT INTO siembras_enfermedad (siembra_id, tipo, severidad, fecha) VALUES (?,?,?,?)',
-      [id, tipo, severidad, fecha]);
-    res.status(201).json({ id: r.insertId });
-  } catch (e) {
-    res.status(400).json({ error: { code: 'DB_ERROR', message: String(e) } });
-  }
-});
-
 export default router;

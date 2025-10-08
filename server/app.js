@@ -9,6 +9,8 @@ import tiposUvaRoutes from './routes/tiposUva.routes.js';
 import siembrasRoutes from './routes/siembras.routes.js';
 import catasRoutes from './routes/catas.routes.js';
 import reportesRoutes from './routes/reportes.routes.js';
+import enfermedadesRoutes from './routes/enfermedades.routes.js';
+import lotesRoutes from './routes/lotes.routes.js'
 
 const app = express();
 app.use(cors());
@@ -22,15 +24,13 @@ app.use('/tipos-uva', tiposUvaRoutes);
 app.use('/siembras', siembrasRoutes);
 app.use('/catas', catasRoutes);
 app.use('/reportes', reportesRoutes);
+app.use('/enfermedades', enfermedadesRoutes);
+app.use('/lotes', lotesRoutes)
 
-// health check DB
+
 app.get('/health/db', async (req, res) => {
-  try {
-    const [rows] = await pool.query('SELECT 1 as ok');
-    res.json({ db: 'up', rows });
-  } catch (e) {
-    res.status(500).json({ db: 'down', error: String(e) });
-  }
+  try { const [rows] = await pool.query('SELECT 1 as ok'); res.json({ db:'up', rows }); }
+  catch(e){ res.status(500).json({ db:'down', error:String(e) }); }
 });
 
 const PORT = process.env.PORT || 4000;

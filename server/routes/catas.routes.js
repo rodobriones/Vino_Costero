@@ -4,6 +4,16 @@ import { requireAuth, requireRole } from '../middleware/auth.js';
 
 const router = Router();
 
+router.get('/', requireAuth, async (req, res) => {
+  const [rows] = await pool.query(
+    `SELECT c.id, l.codigo AS lote, c.lote_id, c.puntaje, c.notas, c.fecha
+     FROM catas c
+     JOIN lotes l ON l.id = c.lote_id
+     ORDER BY c.id DESC`
+  );
+  res.json(rows);
+});
+
 router.get('/lotes', requireAuth, async (req, res) => {
   const { anio } = req.query;
   let sql = 'SELECT * FROM lotes';
@@ -25,6 +35,30 @@ router.post('/', requireAuth, requireRole('admin'), async (req, res) => {
   } catch (e) {
     res.status(400).json({ error: { code: 'DB_ERROR', message: String(e) } });
   }
+});
+
+router.patch('/:id', requireAuth, requireRole('admin'), async (req, res) => {
+  const { id } = req.params;
+  const { lote_id, puntaje, notas, fecha } = req.body;
+  if (puntaje != null && (puntaje < 0 || puntaje > 100)) {
+    return res.status(400).json({ error: { code: 'VALIDATION_ERROR', message: 'puntaje debe estar entre 0 y 100' } });
+  }
+  try {
+    await pool.query(
+      'UPDATE catas SET lote_id=COALESCE(?, lote_id), puntaje=COALESCE(?, puntaje), notas=COALESCE(?, notas), fecha=COALESCE(?, fecha) WHERE id=?',
+      [lote_id ?? null, puntaje ?? null, notas ?? null, fecha ?? null, id]
+    );
+    const [rows] = await pool.query('SELECT * FROM catas WHERE id=?', [id]);
+    res.json(rows[0] || null);
+  } catch (e) {
+    res.status(400).json({ error: { code: 'DB_ERROR', message: String(e) } });
+  }
+});
+
+router.delete('/:id', requireAuth, requireRole('admin'), async (req, res) => {
+  const { id } = req.params;
+  await pool.query('DELETE FROM catas WHERE id=?', [id]);
+  res.json({ ok: true });
 });
 
 export default router;
